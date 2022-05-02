@@ -79,30 +79,33 @@
       <router-link :to="{name: 'Reports'}">Reports home</router-link>
       <router-link :to="{name: 'Reports.Project', params:{projectId:'bgYhx'}}">Project</router-link>
       <router-link :to="{name: 'Reports.Project', params:{projectId:'1nval1d'}}">Project (invalid)</router-link>
-      <router-link :to="{name: 'Reports.Project.Time', params:{startDate: '2021-01-01', endDate:'2021-12-31'}}">Project.Time</router-link>
-      <router-link :to="{name: 'Reports.Project.Time', params:{startDate: '2021-01-01'}}">Project.Time (start-only)</router-link>
-      <router-link :to="{name: 'Reports.Project.Time', params:{startDate:'2021-02-25'}}">Project.Time (start-only-later)</router-link>
-      <router-link :to="{name: 'Reports.Project.Time', params:{startDate:'2021-02-29'}}">Project.Time (start-only-leap)</router-link>
-      <router-link :to="{name: 'Reports.Project.Time', params:{endDate:'2021-12-30'}}">Project.Time (end-only)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate: '2021-01-01', endDate:'2021-12-31'}}">Project.Time</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: null, startDate: '2021-01-01', endDate:'2021-12-31'}}">Project.Time (project null)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate: '2021-01-01'}}">Project.Time (start-only)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate:'2021-22-25'}}">Project.Time (start-only, invalid month)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate:'2021-2225'}}">Project.Time (start-only, invalid format)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate:'2021-02-30'}}">Project.Time (start-only, non-calendar date feb 30th)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx',startDate:'2021-02-29'}}">Project.Time (start-only, leap on non-leap year)</router-link>
+      <router-link :to="{name: 'Reports.Project.Time', params:{project: 'bgYhx', endDate:'2021-12-30'}}">Project.Time (end-only)</router-link>
 
       <router-link :to="{name: 'Reports.Gateway', params:{}}">Gateway</router-link>
       <router-link :to="{name: 'Reports.Gateway', params:{gatewayId:'invalid'}}">Gateway (invalid)</router-link>
-      <router-link :to="{name: 'Reports.Gateway', params:{projectId:'invalid'}}">Gateway (with projectId)</router-link>
-      <router-link :to="{name: 'Reports.Gateway.Time', params:{startDate: '2021-01-01', endDate:'2021-12-31'}}">Gateway.Time</router-link>
-      <router-link :to="{name: 'Reports.Gateway.Time', params:{startDate: '2021-01-01'}}">Gateway.Time (start-only)</router-link>
-      <router-link :to="{name: 'Reports.Gateway.Time', params:{endDate:'2021-12-31'}}">Gateway.Time (end-only)</router-link>
+      <router-link :to="{name: 'Reports.Gateway', params:{projectId:'bgYhx'}}">Gateway (with only projectId)</router-link>
+      <router-link :to="{name: 'Reports.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', startDate: '2021-01-01', endDate:'2021-12-31'}}">Gateway.Time</router-link>
+      <router-link :to="{name: 'Reports.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', startDate: '2021-01-01'}}">Gateway.Time (start-only)</router-link>
+      <router-link :to="{name: 'Reports.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', endDate:'2021-12-31'}}">Gateway.Time (end-only)</router-link>
 
-      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{}}">Project+Gateway.Time</router-link>
-      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{}}">Project+Gateway.Time (start-only)</router-link>
-      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{}}">Project+Gateway.Time (end-only)</router-link>
+      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', startDate: '2021-01-01', endDate:'2021-12-31'}}">Project+Gateway.Time</router-link>
+      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', startDate: '2021-01-01'}}">Project+Gateway.Time (start-only)</router-link>
+      <router-link :to="{name: 'Reports.Project.Gateway.Time', params:{project: 'bgYhx',gateway: 'GzFF8', endDate:'2021-12-31'}}">Project+Gateway.Time (end-only)</router-link>
 
-      <router-link :to="{name: 'Reports.Time', params:{}}">Time (none)</router-link>
+      <router-link :to="{name: 'Reports.Time', params:{}}">Time (no params)</router-link>
       <router-link :to="{name: 'Reports.Time', params:{startDate: '2021-01-01', endDate:'2021-12-31'}}">Time (none)</router-link>
       <router-link :to="{name: 'Reports.Time', params:{startDate: '2021-01-01'}}">Time (start-only)</router-link>
       <router-link :to="{name: 'Reports.Time', params:{endDate: '2021-10-01'}}">Time (end-only)</router-link>
-      <router-link :to="{name: 'Reports.Time', params:{startDate: '2021-10-01',endDate: '2021-08-01'}}">Time end earlier</router-link>
+      <router-link :to="{name: 'Reports.Time', params:{startDate: '2021-10-01',endDate: '2021-08-01'}}">Time end earlier than start</router-link>
       <router-link :to="{name: 'Reports.Time', params:{startDate: '2000-10-01'}}">Time too early</router-link>
-      <router-link :to="{name: 'Reports.Time', params:{endDate: '2023-10-01'}}">Time future</router-link>
+      <router-link :to="{name: 'Reports.Time', params:{endDate: '2023-10-01'}}">Time end only, too late</router-link>
     </div>
   </div>
 </template>
