@@ -1,0 +1,95 @@
+lang:
+  name: English
+  code: en-US
+
+default:
+  meta:
+    title: MVPMatch
+    description: MVPMatch assignment by Martin Kruusement
+    siteName: MVPMatch
+    preview: https://mvpmatch.co/images/match-mvp-social.png
+    # ogImage: overrides 'preview'
+    # twitterImage: overrides 'preview'
+
+dashboard:
+  meta:
+    title: Dashboard - MVPMatch
+    description: MVPMatch assignment by Martin Kruusement
+
+reports:
+  meta:
+    default:
+      title: Reports - MVPMatch
+    project: 
+      title:
+        Project report - MVPMatch
+    gateway: 
+      title:
+        Gateway report - MVPMatch
+  title: Reports
+  caption: Easily generate a report of your transactions
+  emptyReport: 
+    title: No Reports
+    caption: Currently you have no data for the reports to be generated. Once you start generating traffic through the Balance application the reports will be shown.
+  filter: 
+    projects: 
+      placeholder: Choose a project
+      empty: No projects
+      all: All projects
+    gateways: 
+      placeholder: Choose a gateway
+      empty: No gateways
+      all: All gateways
+    datePicker: 
+      startDateLabel: From date
+      endDateLabel: To date
+    fetch: 
+      default: Generate report
+      refresh: Refresh report
+  summary:
+    title:
+      unknown:
+        project: '@:reports.unknown'
+        gateway: '@:gateways.unknown'
+      project: "{0} {'|'} All gateways"
+      gateway: All projects {'|'} {0}
+      none: All projects {'|'} All gateways
+      both: "{0} {'|'} {1}"
+    total: 
+      project: PROJECT TOTAL {'|'} {0} {1}
+      gateway: GATEWAY TOTAL {'|'} {0} {1}
+      both: Total {'|'} {0} {1}
+      none: 'Total: {0} {1}'
+    section:
+      total: 'TOTAL: {0} {1}'
+    table: 
+      date: Date
+      paymentId: Transaction ID
+      amount: Amount
+
+gateways:
+  meta: 
+    title: Gateways - MVPMatch
+  unknown: Unknown Gateway
+
+projects:
+  meta: 
+    title: Projects - MVPMatch
+  unknown: Unknown Project
+
+transactions:
+  meta: 
+    title: Transaction details - MVPMatch
+
+footer:
+  links:
+    toc: Terms & Conditions
+    privacy: Privacy Policy
+
+objects:
+  report:
+    unknown: Unknown Report
+  project:
+    unknown: Unknown Project
+  gateway:
+    unknown: Unknown Gateway

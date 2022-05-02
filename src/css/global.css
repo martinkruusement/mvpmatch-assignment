@@ -1,0 +1,51 @@
+html, body {
+  background-color: white;
+}
+
+a {
+  cursor: pointer;
+}
+
+@keyframes scale_easeOutElastic {
+  0% {
+    transform: scale(0);
+  }
+
+  16% {
+    transform: scale(132.27%);
+  }
+
+  28% {
+    transform: scale(86.88%);
+  }
+
+  44% {
+    transform: scale(104.63%);
+  }
+
+  59% {
+    transform: scale(98.36%);
+  }
+
+  73% {
+    transform: scale(100.58%);
+  }
+
+  88% {
+    transform: scale(99.8%);
+  }
+
+  100% {
+    transform: scale(100%);
+  }
+
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "id": 1,
+     "name": {
+      "first": "John",
+      "last": "Doe",
+      "full": "John M. Doe"
+    },
+    "avatar": "https://limitlessprojects.com/img/logo/telia-logo.svg-INTENTIONALLY-BROKENLINK"
+}

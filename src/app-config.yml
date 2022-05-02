@@ -1,0 +1,19 @@
+# import appConfig from '@/app-config.yml'
+
+reports:
+  dates: 
+    format: 'YYYY-MM-DD'
+    displayFormat: 'DD/MM/YYYY'
+    min: '2021-01-01'
+    max: '2021-12-31'
+  defaultCurrency: 'USD'
+
+chart:
+  colors: 
+  - '#A259FF'
+  - '#F24E1E'
+  - '#FFC107'
+  - '#6497B1'
+
+idValidation:
+  regex: ^[A-z0-9]{5}$

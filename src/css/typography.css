@@ -1,0 +1,68 @@
+:root{
+  --link-color: #005B96;
+  --link-hover-color: #011F4B;
+  --text-color: #011F4B;
+}
+
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  font-family: "Roboto", -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text-color);
+}
+
+pre {
+  font-family: monospace;
+  white-space: pre-wrap;
+  font-size: 12px;
+}
+svg {
+  display: block;
+}
+
+td.text-link a { display: inline-flex; }
+a.text-link,
+td.text-link a {
+  color: var(--link-color);
+  transition: color 0.27s ease;
+  position: relative;
+}
+a.text-link::after,
+td.text-link a::after {
+  content: "";
+  border-bottom: 1px dotted transparent;  
+  transition: border-bottom-color 0.27s ease;
+  display: flex;
+  position: absolute;
+  bottom: 1px;
+  width: 100%;
+}
+a.text-link:hover,
+td.text-link a:hover {
+  color: var(--link-hover-color);
+}
+a.text-link:hover::after,
+td.text-link a:hover::after {
+  border-bottom-color: var(--link-hover-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  
+}
+
+h2 {
+  font-size: 1.5em;
+  line-height: 1.166667;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+h4 {
+  font-weight: bold;
+  line-height: 1.1857;
+  color: #7E8299;
+}
+

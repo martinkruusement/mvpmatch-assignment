@@ -1,0 +1,16 @@
+.base-input {
+    border-radius: 5px;
+    padding: .5em;
+    border: 1px solid grey;
+    font-size: 14px;
+}
+
+.input-field input {
+    display: inline-flex;
+    width:auto;
+}
+
+.input-icon-left {
+    padding-left: 2em;
+}
+
