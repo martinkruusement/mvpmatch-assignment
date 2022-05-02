@@ -58,7 +58,8 @@ export default {
           },
           style: {
             fontSize: 16,
-            fontWeight: 'medium'
+            fontFamily: 'Roboto',
+            fontWeight: '500'
           }
         }
       }
