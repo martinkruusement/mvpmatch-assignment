@@ -35,7 +35,11 @@ export default {
         colors: this.sectors.map(item => item.color),
         labels: this.sectors.map(item => item.label),
         tooltip: {
-          formatter: separateThousands
+          y: {
+            formatter: (input) => {
+              return separateThousands(input)
+            }
+          }
         },
         legend: this.legend || true,
         plotOptions: {
