@@ -40,13 +40,14 @@
       </div>
     </div>
 
-    <!--     <JsonViewer
+    <JsonViewer
+      v-if="debug"
       :value="{
         'v-if': !emptyReportFinished || report?.empty === true,
         ':needed': report?.empty === true,
         'emptyReportFinished': emptyReportFinished
       }"
-    /> -->
+    />
 
     <PageLoading v-if="!ready" />
 
@@ -70,7 +71,7 @@
     <!--     <JsonViewer :value="report" /> -->
     <!--     <JsonViewer :value="$store.getters.processedTransactions(reportKey)" /> -->
 
-    <div v-if="false" style="padding: 2em;" class="debug-links">
+    <div v-if="debug" style="padding: 2em;" class="debug-links">
       <br />
       <br />
       <JsonViewer :value="{reportFields, reportProps, report}" />
@@ -147,7 +148,7 @@ export default {
   },
   data () {
     return {
-      debug: true,
+      debug: false,
       enableDebugEmptyReportOverride: false,
       debugEmptyReportOverride: false,
       debugEmptyReportOverrideInterval: false,
