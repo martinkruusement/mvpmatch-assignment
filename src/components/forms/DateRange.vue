@@ -8,7 +8,7 @@
         range
         input-class-name="date-field start-date-field"
         :start-date="minDate"
-        :placeholder="$t('reports.filter.datePicker.startDateLabel')"
+        :placeholder="needBoth ? startPlaceholder : combinedPlaceholder"
         :format="startDateDisplayFormatter"
         :min-date="minDate"
         :max-date="maxDate"
@@ -17,14 +17,15 @@
         :enable-time-picker="false"
         @update:model-value="emitModelValue"
       />
-      <ArrowRightIcon class="date-input-separator" />
+      <Icon v-show="needBoth" icon="arrow-right" class="date-input-separator" />
       <Datepicker
+        v-show="needBoth"
         v-model="dates"
         utc
         range
         input-class-name="date-field end-date-field"
         :start-date="maxDate"
-        :placeholder="$t('reports.filter.datePicker.endDateLabel')"
+        :placeholder="endPlaceholder"
         :format="endDateDisplayFormatter"
         :min-date="minDate"
         :max-date="maxDate"
@@ -41,23 +42,28 @@
 <script>
 // import DateRange from '@/components/forms/DateRange.vue'
 
+// TODO: can use custom calendar icons?
 // import CalendarIcon from '@/components/icons/CalendarIcon.vue'
-import ArrowRightIcon from '@/components/icons/ArrowRightIcon.vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import Icon from '@/components/icons/Icon.vue'
 
 export default {
   name: 'DateRange',
   components: {
     // CalendarIcon,
     Datepicker,
-    ArrowRightIcon
+    Icon
   },
   props: {
     minDate: String,
     maxDate: String,
     modelValue: { type: Object, required: true },
-    icon: [Boolean, String]
+    icon: [Boolean, String],
+    needBoth: Boolean,
+    startPlaceholder: String,
+    combinedPlaceholder: String,
+    endPlaceholder: String
     // TODO: Support 'calendar', 'search' strings for icons
   },
   emits: ['update:modelValue'],
@@ -139,7 +145,8 @@ export default {
 
 <style lang="css" scoped>
 .fields {
-display: flex;
+  display: flex;
+  align-items: center;
 }
 ::v-deep(.dp__theme_light)  {
     --dp-background-color: #1BC5BD;

@@ -3,8 +3,16 @@ import { mockAuthenticate } from '@/services/mockdata/mock.js'
 import cache from '@/services/cache.js'
 
 const state = {
+  menuOpen: false,
   loading: true,
-  account: null
+  account: null,
+  dialogs: {
+    logout: false
+  },
+  debug: {
+    reportLines: false,
+    general: false
+  }
 }
 
 const getters = {
@@ -37,7 +45,19 @@ const actions = {
     }
 
     // TODO: auth failed
-  }
+  },
+  toggleMenu (store) {
+    store.commit('setMenuState', !store.state.menuOpen)
+  },
+  openMenu (store) {
+    store.commit('setMenuState', true)
+  },
+  closeMenu (store) {
+    store.commit('setMenuState', false)
+  },
+
+  notification () { /* handled in Notifications.vue */ },
+  updateScrollPosition () { /* handled in App.vue */ }
 }
 
 const mutations = {
@@ -49,11 +69,22 @@ const mutations = {
     console.log('authentication complete')
     state.initialized = true
   },
-  setGatewaysLoading (state, status) {
-    state.loading = status
+  setGatewaysLoading (state, to) {
+    state.loading = to
   },
   wipeSystem (state) {
     state.user = null
+  },
+  setMenuState (state, to) {
+    console.log('// TODO: menu unimplemented menu state to:', to)
+    state.menuOpen = to
+  },
+  logoutDialog (state, to) {
+    state.dialogs.logout = to
+  },
+  toggleDebug (state, payload) {
+    const [[key, value]] = Object.entries(payload)
+    state.debug[key] = value
   }
 }
 

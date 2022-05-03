@@ -1,6 +1,6 @@
 import api from '@/services/api.js'
 import cache from '@/services/cache.js'
-import { buildReportId } from '@/functions/functions.js'
+import { buildReportId } from '@/functions/reports.js'
 import { sortObjectsInArray, wait } from '@/utils.js'
 import appConfig from '@/app-config.yml'
 
@@ -145,7 +145,7 @@ const getters = {
 
 const actions = {
   async loadReport (store, { projectId, gatewayId, startDate, endDate }) {
-    console.log('loadreport')
+    console.log('loadreport', { projectId, gatewayId, startDate, endDate })
     const id = buildReportId({ projectId, gatewayId, startDate, endDate })
     const cachedData = cache.read(id)
     if (cachedData) {
@@ -155,7 +155,7 @@ const actions = {
     store.commit('setReportLoading', { id, to: true })
     await wait(2000)
     const report = await api.reports.load({ projectId, gatewayId, startDate, endDate })
-    console.log('report loaded')
+    console.log('report loaded', id)
     if (report) {
       store.commit('saveReport', { id, report: report })
       store.commit('saveTransactionsList', report)

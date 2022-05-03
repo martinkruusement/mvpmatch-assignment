@@ -1,17 +1,24 @@
-:root {
+#app-container {
     --header-height: 80px;
     --page-gutter: 100px;
     --header-margin: 35px;
+    --common-gap: 22px;
     --header-border-width: 1px;
-    --header-offset: calc(var(--header-height) + var(--header-border-width) + var(--header-margin));
+    --header-and-border: calc(var(--header-height) + var(--header-border-width));
+    --header-offset: calc(var(--header-and-border) + var(--header-margin));
     --page-minimum-gutter: 35px;
     --page-extra-gutter: calc(var(--page-gutter) - var(--page-minimum-gutter));  /* 65 */
     --page-offset-right: calc(var(--page-minimum-gutter) + var(--page-extra-gutter));
+    --page-offset-left: calc(var(--page-minimum-gutter) + var(--page-extra-gutter));
     --sidebar-width: var(--page-gutter);
+    --page-head-bottom-margin: 27px;
+    --chart-margin: var(--common-gap);
+    --page-bottom-padding: 3em;
+    --page-bottom-safearea: calc(var(--page-bottom-padding) + var(--common-gap) + 1em + var(--common-gap));
 }
 
 @media (max-width: 1033px) {
-    :root{
+    #app-container{
         --page-extra-gutter: 0px;
     }
 }
@@ -19,7 +26,7 @@
     display: flex;
     min-height: 100vh;
 }
-.app-container {
+#app-container {
     flex:1;
     display: flex;
     flex-direction: column;
@@ -29,14 +36,23 @@
     flex-direction: column;
     flex: 1;
 }
-.page-container {
+.sidebar-page {
     flex: 1;
     display: flex;
     margin-right: var(--page-offset-right);
     margin-top: var(--header-offset);
 }
-.sidebar-page {
-    flex-direction: row;
+
+.legal-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: var(--page-offset-right);
+    margin-left: var(--page-offset-left);
+    margin-top: var(--header-offset);
+}
+.legal-page .page-body {
+    max-width: 600px;
 }
 
 .content-wrap {
@@ -48,14 +64,14 @@
     flex:1;
     display: flex;
     flex-direction: column;
-    padding-bottom: 3em;
+    padding-bottom: var(--page-bottom-padding);
 }
 
 .page-title {
     flex: 1;
 }
 .page-head {
-    margin-bottom: 27px;
+    margin-bottom: var(--page-head-bottom-margin);
     display: flex;
     flex-direction: row;
     column-gap: 40px;
@@ -81,7 +97,7 @@
 }
 
 .well {
-    background-color: #F1FAFE;
+    background-color: #F1FAFE;;
     border-radius: 10px;
     padding: 17px 20px 17px 20px;
 }

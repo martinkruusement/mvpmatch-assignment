@@ -8,7 +8,6 @@
     </div>
     <div v-if="$store.state.system.initialized" class="page-body">
       <div class="layout-row">
-        <JsonViewer :value="$store.state.system" />
       </div>
     </div>
     <PageLoading v-else />

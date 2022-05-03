@@ -1,17 +1,18 @@
-<template>
+'<template>
   <div class="header">
-    <Logo class="logo" />
-    <MenuButton class="menu-button" />
-    <div v-if="loggedIn" class="account">
-      <Avatar :name="account.name" :img="account.avatar" radius="5" padding="5" size="43" />
+    <router-link :to="{name:'Dashboard'}">
+      <Logo class="logo" />
+    </router-link>
+    <MenuButton class="menu-button" @click="$store.dispatch('toggleMenu')" />
+    <router-link v-if="loggedIn" v-hover="hoverHandler" :to="{name: 'Account'}" class="account">
+      <Avatar :hover="accountHover" :name="account.name" :img="account.avatar" radius="5" padding="5" size="43" />
       <div class="account-name">{{ account.name.display }}</div>
-    </div>
+    </router-link>
   </div>
 </template>
 
 <script>
-// import Header from '@/components/layout/header/Header.vue'
-
+import { vElementHover } from '@vueuse/components'
 import MenuButton from '@/components/layout/header/MenuButton.vue'
 import Logo from '@/components/layout/header/Logo.vue'
 import Avatar from '@/components/ui/Avatar.vue'
@@ -21,12 +22,25 @@ export default {
   components: {
     Logo, Avatar, MenuButton
   },
+  directives: {
+    hover: vElementHover
+  },
+  data () {
+    return {
+      accountHover: false
+    }
+  },
   computed: {
     account () {
       return this.$store.getters.account
     },
     loggedIn () {
       return this.$store.getters.loggedIn
+    }
+  },
+  methods: {
+    hoverHandler (status) {
+      this.accountHover = status
     }
   }
 }

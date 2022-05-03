@@ -24,8 +24,10 @@
     <meta property="og:image" :content="meta.og.image" />
     <meta property="twitter:image" :content="meta.twitter.image" />
   </Head>
-  <div v-scroll="onScroll" class="app-container" :class="classes">
+  <div id="app-container" :class="classes">
     <router-view />
+    <DialogContainer />
+    <Notifications />
   </div>
 </template>
 
@@ -36,13 +38,20 @@ import '@/css/layout.css'
 import '@/css/typography.css'
 import '@/css/forms.css'
 import { Head } from '@vueuse/head'
+import DialogContainer from '@/components/dialogs/DialogContainer.vue'
+import Notifications from '@/components/notifications/Notifications.vue'
 
 export default {
   name: 'App',
-  components: { Head },
+  components: {
+    Head,
+    Notifications,
+    DialogContainer
+  },
   data () {
     return {
-      scrollOffsetY: 0
+      scrollOffsetY: 0,
+      scrollUpdateUnsubscribe: null
     }
   },
   computed: {
@@ -109,12 +118,18 @@ export default {
   beforeMount () {
     this.$store.dispatch('authenticate')
     window.addEventListener('scroll', this.onScroll)
+    this.scrollUpdateUnsubscribe = this.$store.subscribeAction(action => {
+      if (action.type === 'updateScrollPosition') {
+        this.scrollOffsetY = window.scrollY + 'px'
+      }
+    })
   },
   mounted () {
     this.onScroll()
   },
   beforeUnmount () {
     window.removeEventListener('scroll', this.onScroll)
+    this.scrollUpdateUnsubscribe()
   },
   methods: {
     getMetaFromRouter (key) {
@@ -136,7 +151,7 @@ export default {
       }
     },
     onScroll () {
-      // TODO: throttle
+      // TODO: worth throttling?
       this.scrollOffsetY = window.scrollY + 'px'
     }
   }
@@ -144,7 +159,7 @@ export default {
 </script>
 
 <style>
-.app-container {
+#app-container {
   --scroll-offset-y: v-bind(scrollOffsetY);
 }
 </style>

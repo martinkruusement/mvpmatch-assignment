@@ -3,7 +3,7 @@ import {
   validateProjectId,
   validateGatewayId,
   validateReportDates
-} from '@/functions/functions.js'
+} from '@/functions/reports.js'
 
 function load ({ projectId, gatewayId, startDate, endDate }) {
   const payload = {}

@@ -1,16 +1,16 @@
 <template>
-  <div class="sidebar-item">
-    <router-link v-if="route" :to="route">
+  <div v-hover="handleHover" class="sidebar-item">
+    <router-link v-if="route" :to="route" class="sidebar-link">
       <component :is="icons[icon]" class="icon" :active="iconActive" :hover="iconHover" :idle="iconIdle" />
     </router-link>
-
-    <div v-else>
+    <div v-else class="non-link">
       <component :is="icons[icon]" class="icon" :active="iconActive" :hover="iconHover" :idle="iconIdle" />
     </div>
   </div>
 </template>
 
 <script>
+import { vElementHover } from '@vueuse/components'
 import DashboardIcon from '@/components/layout/sidebar/icons/DashboardIcon.vue'
 import ProjectsIcon from '@/components/layout/sidebar/icons/ProjectsIcon.vue'
 import GatewaysIcon from '@/components/layout/sidebar/icons/GatewaysIcon.vue'
@@ -28,6 +28,9 @@ export default {
     DarkmodeIcon,
     LogoutIcon
   },
+  directives: {
+    hover: vElementHover
+  },
   props: {
     order: Number,
     route: Object,
@@ -39,6 +42,7 @@ export default {
     return {
       animationTimeout: null,
       canStartIntro: false,
+      hover: false,
       icons: {
         dashboard: 'DashboardIcon',
         projects: 'ProjectsIcon',
@@ -77,7 +81,7 @@ export default {
       return false
     },
     iconHover () {
-      return false
+      return this.hover
     },
     iconIdle () {
       if (this.iconActive) {
@@ -118,6 +122,9 @@ export default {
   methods: {
     startIntro () {
       this.canStartIntro = true
+    },
+    handleHover (value) {
+      this.hover = value
     }
   }
 }
@@ -126,10 +133,10 @@ export default {
 <style lang="css" scoped>
 .sidebar-item {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 45px;
   height: 45px;
+  cursor: pointer;
 }
 .icon{
   width: 25px;
@@ -139,5 +146,18 @@ export default {
 .icon.idle {
 /* // TODO: can this actually ever look good? */
   opacity: 1;
+}
+
+.sidebar-link {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.non-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

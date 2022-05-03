@@ -1,13 +1,13 @@
 <template>
-  <div class="btn" :class="classes">
+  <div class="basic-button" :class="classes">
     <Spinner v-if="loading" class="spinner" :size="spinnerSize" />
     <div class="label">{{ label }}</div>
   </div>
 </template>
 
 <script>
-// import BasicButton from '@/components/ui/buttons/BasicButton.vue'
-// <BasicButton full-width :label="$t('profile.contactForm.buttonLabel')" @click="submit"/>
+// import BasicButton from '@/components/buttons/BasicButton.vue'
+// <BasicButton full-width :label="$t('reports.filter.fetch.refresh')" @click="submit"/>
 
 import Spinner from '@/components/misc/Spinner.vue'
 
@@ -18,14 +18,22 @@ export default {
     label: { type: String, required: true },
     fullWidth: Boolean,
     loading: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    iconOnly: Boolean,
+    bgColor: { type: String, default: '#005B96' },
+    textColor: { type: String, default: '#FFFFFF' },
+    dark: Boolean,
+    muted: Boolean
   },
   computed: {
     classes () {
       return {
         loading: this.loading,
         disabled: this.disabled || this.loading,
-        'full-width': this.fullWidth
+        'full-width': this.fullWidth,
+        'icon-only': this.iconOnly,
+        dark: this.dark,
+        muted: this.muted
       }
     },
     spinnerSize () {
@@ -36,9 +44,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.btn {
-    color: #FFFFFF;
-    background-color: #005B96;
+.basic-button {
+    color: v-bind(textColor);
+    background-color: v-bind(bgColor);
     transition: 0.2s all;
     height: 40px;
     border-radius: 5px;
@@ -51,11 +59,11 @@ export default {
     white-space: nowrap;
 }
 @media (hover: hover) {
-  .btn:hover {
+  .basic-button:hover {
       background-color: #016DB2;
   }
 }
-.btn:active {
+.basic-button:active {
     background-color: #01578E;
 }
 
@@ -75,10 +83,10 @@ export default {
   background-color: rgba(0,0,0,0.05);
   border: 0;
   pointer-events: none;
-  color:  #435152;
 }
 .disabled .label {
   opacity: 0.5;
+  color: v-bind(bgColor);
 }
 
 .spinner {
@@ -90,5 +98,17 @@ export default {
 
 .loading .label {
   opacity: 0;
+}
+.muted {
+  background: #f8f9f9;
+  color: v-bind(bgColor);
+}
+.muted.disabled .label{
+  color: #CCCCCC;
+  opacity: 1;
+}
+
+.shadow {
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.3);
 }
 </style>

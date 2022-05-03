@@ -85,20 +85,23 @@ const routes = [
     ]
   },
   {
-    path: '/terms',
-    name: 'Terms',
-    component: () => import(/* webpackChunkName: "legal" */ '@/pages/ReportsPage.vue'),
-    meta: {
-      i18nPath: 'terms.meta'
-    }
-  },
-  {
-    path: '/privacy',
-    name: 'Privacy',
-    component: () => import(/* webpackChunkName: "legal" */ '@/pages/ReportsPage.vue'),
-    meta: {
-      i18nPath: 'privacy.meta'
-    }
+    path: '/legal',
+    component: () => import(/* webpackChunkName: "legal" */ '@/pages/LegalPage.vue'),
+    children: [{
+      name: 'Terms',
+      path: 'terms',
+      component: () => import(/* webpackChunkName: "legal" */ '@/components/legal/Terms.vue'),
+      meta: {
+        i18nPath: 'terms.meta'
+      }
+    }, {
+      name: 'Privacy',
+      path: 'privacy',
+      component: () => import(/* webpackChunkName: "legal" */ '@/components/legal/Privacy.vue'),
+      meta: {
+        i18nPath: 'privacy.meta'
+      }
+    }]
   },
   {
     path: '/transaction/:transactionId',
@@ -107,6 +110,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "transactions" */ '@/pages/TransactionsPage.vue'),
     meta: {
       i18nPath: 'transactions.meta'
+    }
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/AccountPage.vue'),
+    meta: {
+      i18nPath: 'account.meta'
     }
   }
 ]

@@ -285,6 +285,28 @@ function parseDateFormat (input, format) {
   return { year, month, day }
 }
 
+function formatDate ({ year, day, month }, format) {
+  if ([year, month, day].includes(undefined)) {
+    return null
+  }
+  if (!isValidCalendarDate({ year, month, day })) {
+    return null
+  }
+
+  year = year.toString().padStart(4, '0')
+  month = month.toString().padStart(2, '0')
+  day = day.toString().padStart(2, '0')
+
+  switch (format) {
+    case 'YYYY-MM-DD':
+      return `${year}-${month}-${day}`
+    case 'DD/MM/YYYY':
+      return `${day}/${month}/${year}`
+    default:
+      return null
+  }
+}
+
 function isValidCalendarDate ({ year, month, day }) {
   // Filter dates that actually exist in the calendar
   // "2021-12-40" false
@@ -302,7 +324,7 @@ function isValidCalendarDate ({ year, month, day }) {
 }
 
 function convertDateFormat (input, format, outputFormat) {
-  // TODO: support parsing from Date or just use momentjs
+  // TODO: support parsing from Date or just use datefns
   const parts = parseDateFormat(input, format)
   if (!parts) {
     return 'Invalid date'
@@ -375,5 +397,6 @@ export {
   isValidCalendarDate,
   convertDateFormat,
   stripDecimals,
-  separateThousands
+  separateThousands,
+  formatDate
 }

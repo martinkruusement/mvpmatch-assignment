@@ -23,6 +23,8 @@ import Sidebar from '@/components/layout/sidebar/Sidebar.vue'
 import Footer from '@/components/layout/footer/Footer.vue'
 import Reports from '@/components/reports/Reports.vue'
 
+import { routeGuard } from '@/functions/reports.js'
+
 export default {
   name: 'ReportsPage',
   components: {
@@ -30,6 +32,14 @@ export default {
     Sidebar,
     Footer,
     Reports
+  },
+  beforeRouteEnter (to, from, next) {
+    const gate = routeGuard(to)
+    gate.valid ? next() : next(gate.cleanRoute)
+  },
+  beforeRouteUpdate (to, from, next) {
+    const gate = routeGuard(to)
+    gate.valid ? next() : next(gate.cleanRoute)
   },
   props: {
     projectId: String,

@@ -1,35 +1,41 @@
 <template>
-  <div class="page-content">
-    <div class="page-head">
+  <div v-element-size="bodyResizeHandler" class="page-content">
+    <div v-element-size="headResizeHandler" class="page-head">
       <div class="page-title">
         <h2>{{ $t('reports.title') }}</h2>
         <h4>{{ $t('reports.caption') }}</h4>
       </div>
       <div class="page-controls report-controls">
-        <Dropdown
-          v-model="fields.projectId"
-          :items="projects"
-          value-prop="projectId"
-          label-prop="name"
-          :null-item-label="$t('reports.filter.projects.all')"
-          :disabled="controls.project.disabled"
-          :placeholder="$t('reports.filter.projects.placeholder')"
-          :empty-text="$t('reports.filter.projects.empty')"
-        />
-        <Dropdown
-          v-model="fields.gatewayId"
-          :items="gateways"
-          value-prop="gatewayId"
-          label-prop="name"
-          :null-item-label="$t('reports.filter.gateways.all')"
-          :disabled="controls.gateway.disabled"
-          :placeholder="$t('reports.filter.gateways.placeholder')"
-          :empty-text="$t('reports.filter.gateways.empty')"
-        />
+        <div class="dropdown-group">
+          <Dropdown
+            v-model="fields.projectId"
+            :items="projects"
+            value-prop="projectId"
+            label-prop="name"
+            :null-item-label="$t('reports.filter.projects.all')"
+            :disabled="controls.project.disabled"
+            :placeholder="$t('reports.filter.projects.placeholder')"
+            :empty-text="$t('reports.filter.projects.empty')"
+          />
+          <Dropdown
+            v-model="fields.gatewayId"
+            :items="gateways"
+            value-prop="gatewayId"
+            label-prop="name"
+            :null-item-label="$t('reports.filter.gateways.all')"
+            :disabled="controls.gateway.disabled"
+            :placeholder="$t('reports.filter.gateways.placeholder')"
+            :empty-text="$t('reports.filter.gateways.empty')"
+          />
+        </div>
         <DateRange
           v-model="fields.dates"
           :min-date="$store.state.reports.config.minDate"
           :max-date="$store.state.reports.config.maxDate"
+          :need-both="controls.datePicker.needBoth"
+          :start-placeholder="$t('reports.filter.datePicker.placeholder.start')"
+          :end-placeholder="$t('reports.filter.datePicker.placeholder.end')"
+          :combined-placeholder="$t('reports.filter.datePicker.placeholder.combined')"
         />
         <BasicButton
           :disabled="controls.generate.disabled"
@@ -39,15 +45,6 @@
         />
       </div>
     </div>
-
-    <JsonViewer
-      v-if="debug"
-      :value="{
-        'v-if': !emptyReportFinished || report?.empty === true,
-        ':needed': report?.empty === true,
-        'emptyReportFinished': emptyReportFinished
-      }"
-    />
 
     <PageLoading v-if="!ready" />
 
@@ -68,12 +65,17 @@
       <ReportTotal v-if="report.type === 'both'" class="report-total">{{ total }}</ReportTotal>
     </div>
 
-    <!--     <JsonViewer :value="report" /> -->
-    <!--     <JsonViewer :value="$store.getters.processedTransactions(reportKey)" /> -->
+    <div v-if="debug" style="padding: 2em;" class="debug-links layout-row">
+      <pre>Emtpy state animation:</pre>
+      <JsonViewer
+        v-if="debug"
+        :value="{
+          'v-if': !emptyReportFinished || report?.empty === true,
+          ':needed': report?.empty === true,
+          'emptyReportFinished': emptyReportFinished
+        }"
+      />
 
-    <div v-if="debug" style="padding: 2em;" class="debug-links">
-      <br />
-      <br />
       <JsonViewer :value="{reportFields, reportProps, report}" />
       <br />
 
@@ -108,22 +110,28 @@
       <router-link :to="{name: 'Reports.Time', params:{startDate: '2000-10-01'}}">Time too early</router-link>
       <router-link :to="{name: 'Reports.Time', params:{endDate: '2023-10-01'}}">Time end only, too late</router-link>
     </div>
+    <div v-if="reportLines" class="debugbox debugbox-99"></div>
+    <div v-if="reportLines" class="debugbox debugbox-98"></div>
+    <div v-if="reportLines" class="debugbox debugbox-97"></div>
+    <div v-if="reportLines" class="debugbox debugbox-96"></div>
+    <div v-if="reportLines" class="debugbox debugbox-95"></div>
+
+    <div v-if="reportLines" class="debugbox debugbox3"></div>
   </div>
 </template>
 
 <script>
-// TODO: remove debug
-
-import { buildReportId } from '@/functions/functions.js'
 import { stripDecimals, separateThousands } from '@/utils.js'
 import appConfig from '@/app-config.yml'
+import { buildReportId } from '@/functions/reports.js'
+import { vElementSize } from '@vueuse/components'
 
 import ReportOverview from '@/components/reports/ReportOverview.vue'
 import ReportChart from '@/components/reports/ReportChart.vue'
 import ReportTotal from '@/components/reports/ReportTotal.vue'
 import PageLoading from '@/components/misc/PageLoading.vue'
 import Dropdown from '@/components/forms/Dropdown.vue'
-import BasicButton from '@/components/ui/buttons/BasicButton.vue'
+import BasicButton from '@/components/buttons/BasicButton.vue'
 import DateRange from '@/components/forms/DateRange.vue'
 import EmptyReportBLock from '@/components/reports/EmptyReportBLock.vue'
 
@@ -139,6 +147,9 @@ export default {
     BasicButton,
     ReportTotal
   },
+  directives: {
+    elementSize: vElementSize
+  },
   props: {
     ready: Boolean,
     projectId: String,
@@ -148,7 +159,6 @@ export default {
   },
   data () {
     return {
-      debug: false,
       enableDebugEmptyReportOverride: false,
       debugEmptyReportOverride: false,
       debugEmptyReportOverrideInterval: false,
@@ -160,10 +170,20 @@ export default {
           startDate: this.startDate,
           endDate: this.endDate
         }
+      },
+      domDimensions: {
+        body: { width: 0, height: 0 },
+        head: { width: 0, height: 0 }
       }
     }
   },
   computed: {
+    debug () {
+      return this.$store.state.system.debug.general
+    },
+    reportLines () {
+      return this.$store.state.system.debug.reportLines
+    },
     noFilterApplied () {
       return this.$router.currentRoute.value.name === 'Reports'
     },
@@ -350,18 +370,23 @@ export default {
         value: this.reportProps.gateway
       }
 
-      const generate = {
-        disabled: !this.ready || this.$store.state.reports.reports.loading,
-        loading: this.$store.state.reports.loading[this.reportKey]
+      const datePicker = {
+        needBoth: !!this.reportProps.endDate
       }
 
-      return { project, gateway, generate }
+      const compact = true
+      const generate = {
+        disabled: !this.ready || this.$store.state.reports.reports.loading,
+        loading: this.$store.state.reports.loading[this.reportKey],
+        compact
+      }
+
+      return { project, gateway, generate, datePicker }
     }
   },
   watch: {
     reportProps: {
       handler: function (props) {
-        console.log('new props')
         this.fields.projectId = props.projectId
         this.fields.gatewayId = props.gatewayId
         this.fields.dates.startDate = props.startDate
@@ -371,7 +396,6 @@ export default {
     },
     reportFields: {
       handler: function (props) {
-        console.log('new fields')
         this.loadReport()
       },
       immediate: true
@@ -408,8 +432,6 @@ export default {
         params.endDate = fields.endDate
       }
 
-      console.log('new route', { name: routeName, params })
-
       this.$router.push({ name: routeName, params })
     },
     startEmptyAnimation () {
@@ -417,12 +439,116 @@ export default {
     },
     endEmptyAnimation () {
       this.emptyReportFinished = true
+    },
+    bodyResizeHandler ({ width, height }) {
+      this.$store.dispatch('updateScrollPosition')
+      this.domDimensions.body.width = width
+      this.domDimensions.body.height = height
+    },
+    headResizeHandler ({ width, height }) {
+      this.$store.dispatch('updateScrollPosition')
+      this.domDimensions.head.width = width
+      this.domDimensions.head.height = height
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
+.page-content {
+  --page-head-height: v-bind("domDimensions.head.height + 'px'");
+  --content-height: v-bind("domDimensions.body.height + 'px'");
+  --page-head-offset: calc(var(--page-head-height) + var(--page-head-bottom-margin));
+  /*
+  --page-available-height: calc(100vh - var(--header-offset) - var(--common-gap) - var(--common-gap));
+
+  --scroll-compensation: calc(min(calc(var(--scroll-offset-y)), calc(var(--header-offset) - var(--chart-margin))) -  var(--safearea-compensation));
+  --chart-max-height: calc(100vh - var(--header-offset) - var(--page-head-offset) + var(--scroll-compensation) - var(--chart-margin));
+
+  --head-visible-height: max(calc(var(--header-offset) + var(--page-head-offset) - var(--scroll-offset-y) - var(--header-offset)), 0px);
+
+  --distance-from-top: calc(var(--header-offset) + var(--head-visible-height));
+*/
+/*  --top-distance: calc(var(--header-and-border) + var(--top-comp) + 20px);*/
+  --top-offset: calc(var(--page-head-offset) + var(--header-offset));
+  --top-edge: max(calc(var(--top-offset) - var(--scroll-offset-y)), 0px);
+  --top-comp: calc(var(--header-and-border) - var(--top-edge) + var(--chart-margin));
+  --top-limit: calc(var(--top-edge) + var(--top-comp));
+  --top-distance: max(var(--top-limit), var(--top-edge));
+  --all-content-height: calc(var(--header-offset) + var(--content-height));
+
+  --bottom-distance: max(calc(var(--scroll-offset-y) - var(--all-content-height) + 100vh ), var(--chart-margin));
+
+  --chart-max-height: calc(100vh - var(--top-distance) - var(--bottom-distance));
+}
+.report-chart {
+  max-height: var(--chart-max-height);
+  flex: .457;
+}
+
+.debugbox-99 {
+  height: var(--top-offset);
+  background: purple; top: 0;
+}
+.debugbox-98 {
+  height: var(--top-edge);
+  background: purple; top: 0;
+}
+.debugbox-97 {
+  height: var(--top-comp);
+  background: green; top: 0;
+}
+.debugbox-96 {
+  height: var(--top-limit);
+  background: red; top: 0;
+}
+.debugbox-95 {
+  height: var(--top-distance);
+  background: pink; top: 0;
+}
+.debugbox3 {
+  height: var(--bottom-distance);
+  background: orange; bottom:0;
+}
+
+.debugbox-99 {
+  z-index: 1000000;
+  position: fixed;
+  right: 300px;
+  width: 10px;
+  border: 5px solid cyan;
+}
+.debugbox-98 {
+  z-index: 1000000;
+  position: fixed;
+  right: 280px;
+  width: 10px;
+}
+.debugbox-97 {
+  z-index: 1000000;
+  position: fixed;
+  right: 260px;
+  width: 10px;
+}
+.debugbox-96 {
+  z-index: 1000000;
+  position: fixed;
+  right: 240px;
+  width: 10px;
+}
+.debugbox-95 {
+  z-index: 1000000;
+  position: fixed;
+  right: 220px;
+  width: 10px;
+}
+.debugbox3 {
+  z-index: 1000000;
+  position: fixed;
+  right: 250px;
+  width: 10px;
+}
+
 .debug-links {
   display: flex;
   flex-direction: column;
@@ -435,7 +561,8 @@ export default {
 }
 
 .report-controls{
-    gap: 23px;
+  gap: 23px;
+  justify-content: flex-end;
 }
 
 .report-total {
@@ -446,6 +573,14 @@ export default {
  align-items: flex-start;
 }
 
+.dropdown-group {
+  display: flex;
+  gap: inherit;
+}
+
+.report-content{
+  min-height: 61.8vh;
+}
 @media (max-width: 768px) {
   .report-content{
     flex-direction: column;

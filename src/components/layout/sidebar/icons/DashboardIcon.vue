@@ -1,24 +1,68 @@
 <template>
-  <div class="icon" :class="{idle, active, hover}">
+  <div class="icon" :class="[status]">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21.32 0H2.68C1.19988 0 0 1.19988 0 2.68V21.32C0 22.8001 1.19988 24 2.68 24H21.32C22.8001 24 24 22.8001 24 21.32V2.68C24 1.19988 22.8001 0 21.32 0Z" fill="#CDCCCC" />
-      <path d="M12.82 10.5H11.17C10.8 10.5 10.5 10.8 10.5 11.17V20.33C10.5 20.7 10.8 21 11.17 21H12.82C13.19 21 13.49 20.7 13.49 20.33V11.17C13.49 10.8 13.19 10.5 12.82 10.5Z" fill="white" />
-      <path d="M6.82977 16.5H5.17977C4.80973 16.5 4.50977 16.8 4.50977 17.17V20.33C4.50977 20.7 4.80973 21 5.17977 21H6.82977C7.1998 21 7.49977 20.7 7.49977 20.33V17.17C7.49977 16.8 7.1998 16.5 6.82977 16.5Z" fill="#B3B3B3" />
-      <path d="M18.8298 3H17.1798C16.8097 3 16.5098 3.29997 16.5098 3.67V20.33C16.5098 20.7 16.8097 21 17.1798 21H18.8298C19.1998 21 19.4998 20.7 19.4998 20.33V3.67C19.4998 3.29997 19.1998 3 18.8298 3Z" fill="#B3B3B3" />
+      <path class="section1 highlight-color" d="M21.32 0H2.68C1.19988 0 0 1.19988 0 2.68V21.32C0 22.8001 1.19988 24 2.68 24H21.32C22.8001 24 24 22.8001 24 21.32V2.68C24 1.19988 22.8001 0 21.32 0Z" />
+      <path class="section2" d="M12.82 10.5H11.17C10.8 10.5 10.5 10.8 10.5 11.17V20.33C10.5 20.7 10.8 21 11.17 21H12.82C13.19 21 13.49 20.7 13.49 20.33V11.17C13.49 10.8 13.19 10.5 12.82 10.5Z" fill="white" />
+      <path class="section3 base-color" d="M6.82977 16.5H5.17977C4.80973 16.5 4.50977 16.8 4.50977 17.17V20.33C4.50977 20.7 4.80973 21 5.17977 21H6.82977C7.1998 21 7.49977 20.7 7.49977 20.33V17.17C7.49977 16.8 7.1998 16.5 6.82977 16.5Z" />
+      <path class="section4 base-color" d="M18.8298 3H17.1798C16.8097 3 16.5098 3.29997 16.5098 3.67V20.33C16.5098 20.7 16.8097 21 17.1798 21H18.8298C19.1998 21 19.4998 20.7 19.4998 20.33V3.67C19.4998 3.29997 19.1998 3 18.8298 3Z" />
     </svg>
   </div>
 </template>
 
 <script>
+import { wait } from '@/utils.js'
+// TODO: this needs to be reusable
 export default {
   name: 'DashboardIcon',
   props: {
     idle: Boolean,
     active: Boolean,
     hover: Boolean
+  },
+  data: function () {
+    return {
+      hasFinishedAnimating: false
+    }
+  },
+  computed: {
+    status () {
+      if (this.active) {
+        return 'active'
+      }
+      if (this.hover) {
+        return 'hover'
+      }
+      return 'idle'
+    }
+  },
+  mounted () {
+    this.animateIn()
+  },
+  methods: {
+    async animateIn () {
+      await wait(20)
+      this.hasFinishedAnimating = true
+    }
   }
 }
 </script>
 
 <style lang="css" scoped>
+  path {
+  transition: fill 0.28s ease;
+}
+
+.idle .base-color { fill: var(--icon-grey-dark); }
+.idle .highlight-color { fill: var(--icon-grey-light); }
+
+.hover .base-color { fill: var(--icon-color-dark); }
+.hover .highlight-color { fill: var(--icon-color-light); }
+
+.active .base-color { fill: var(--icon-color-light) }
+.active .highlight-color { fill: var(--icon-color-dark) }
+
+.section1 { transition-duration: 0.16s; }
+.section2 { transition-duration: 0.24s; }
+.section3 { transition-duration: 0.31s; }
+.section4 { transition-duration: 0.38s; }
 </style>

@@ -1,12 +1,14 @@
 <template>
   <div class="pie-chart">
-    <ApexChart
-      type="donut"
-      width="380"
-      class="apex-pie-chart"
-      :options="chartOptions"
-      :series="series"
-    />
+    <div class="apex-pie-container">
+      <ApexChart
+        type="donut"
+        width="380"
+        class="apex-pie-chart"
+        :options="chartOptions"
+        :series="series"
+      />
+    </div>
   </div>
 </template>
 
@@ -70,13 +72,14 @@ export default {
 </script>
 
 <style scoped>
-.pie-chart {
-  position: relative;
-  width: 276px;
-  height: 276px;
-}
 .apex-pie-chart {
   position: absolute;
   transform: translate(-53px, -8px);
+}
+.apex-pie-container {
+  display: block;
+  width: 276px;
+  height: 276px;
+  position: relative;
 }
 </style>

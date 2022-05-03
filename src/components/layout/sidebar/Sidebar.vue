@@ -40,7 +40,7 @@
         :order="5"
         :animation-delay="animationDelays[5]"
         aria-label="log out"
-        @click="logOut"
+        @click="$store.commit('logoutDialog', true)"
         @activate="iconWave"
       />
     </nav>
@@ -49,6 +49,7 @@
 
 <script>
 import SidebarItem from '@/components/layout/sidebar/SidebarItem.vue'
+
 export default {
   name: 'Sidebar',
   components: {
@@ -56,6 +57,7 @@ export default {
   },
   data () {
     return {
+      showLogoutDialog: false,
       introWaveStarted: false,
       waveTimings: [0, 0, 0, 0, 0, 0, 0],
       animationDelays: [null, null, null, null, null, null]
@@ -94,7 +96,7 @@ export default {
       console.log('toggleDarkMode') // TODO: toggleDarkMode
     },
     logOut () {
-      console.log('logOut') // TODO: logOut
+      this.showLogoutDialog = true
     }
   }
 }

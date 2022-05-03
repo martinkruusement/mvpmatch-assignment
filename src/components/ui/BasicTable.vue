@@ -13,10 +13,10 @@
             :key="`${r}-${field}`"
             :class="col.types"
           >
-            <span v-if="row.route">
+            <div v-if="row.route">
               <router-link :to="row.route">{{ row[field] }}</router-link>
-            </span>
-            <span v-else>{{ row[field] }}</span>
+            </div>
+            <div v-else>{{ row[field] }}</div>
           </td>
         </tr>
       </tbody>

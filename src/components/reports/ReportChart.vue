@@ -1,7 +1,11 @@
 <template>
   <div class="report-chart">
     <Legend v-if="chart.useCustomLegend" class="legend" :data="chart.series" />
-    <BasicPieChart :data="chart" :legend="!chart.useCustomLegend" />
+    <div class="pie-top-margin"></div>
+    <div class="pie-box">
+      <BasicPieChart class="pie-chart" :data="chart" :legend="!chart.useCustomLegend" />
+    </div>
+    <div class="pie-bottom-margin"></div>
     <ReportTotal class="total">{{ total }}</ReportTotal>
   </div>
 </template>
@@ -47,25 +51,34 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.legend {
-  margin-bottom: 10px;
-}
 .report-chart {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: var(--header-offset);
+  top: calc(var(--header-height) + var(--chart-margin));
   min-height: 400px;
+  --chart-size: 280px;
+  min-width: var(--chart-size);
 }
-@media (min-width: 850px) {
-  .report-chart {
-/*  // TODO: magic science after keeping track of page-header height */
-    max-height: calc(100vh - var(--header-offset) - 95px + min(var(--scroll-offset-y), 80px));
-  }
+.pie-top-margin {
+  width: 100%;
+  flex: .5;
+  min-height: 10px;
+}
+.pie-bottom-margin {
+  width: 100%;
+  flex: .5;
+}
+.pie-box {
+  width: var(--chart-size);
+  margin-left: var(--chart-margin);
+  margin-right: var(--chart-margin);
+  flex: 1;
 }
 .total {
   margin-top: 10px;
+  align-self: flex-end;
 }
 </style>

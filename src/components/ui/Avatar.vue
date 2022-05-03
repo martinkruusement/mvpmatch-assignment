@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar">
+  <div class="avatar" :class="{hover}">
     <LazyImage v-if="img && !imgFailed" class="image" :src="img" contain transparent circle @error="imgFailed = true" />
     <div v-else class="text">{{ initials }}</div>
   </div>
@@ -8,6 +8,7 @@
 <script>
 import { cssUnits, initialsFromName } from '@/utils.js'
 import LazyImage from '@/components/ui/LazyImage.vue'
+import Color from 'color'
 
 export default {
   name: 'Avatar',
@@ -21,7 +22,8 @@ export default {
     color: { type: String, default: '#F6CA65' },
     textColor: { type: String, default: '#FFFFFF' },
     fontSize: { type: [String, Number], default: 23 },
-    padding: { type: [String, Number], default: 0 }
+    padding: { type: [String, Number], default: 0 },
+    hover: Boolean
   },
   data () {
     return {
@@ -36,8 +38,10 @@ export default {
         backgroundColor: this.color,
         size: cssUnits(this.size, 'px').css,
         padding: cssUnits(this.padding, 'px').css,
-        fontSize: cssUnits(this.fontSize, 'px').css
+        fontSize: cssUnits(this.fontSize, 'px').css,
+        hoverBackgroundColor: Color(this.color).darken(0.123).hex()
       }
+
       if (this.circle) {
         css.radius = '100%'
       }
@@ -65,8 +69,17 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.image {
-
+.avatar {
+  background-color: v-bind(css.backgroundColor);
+  transition: background-color 0.23s ease;
+}
+@media (hover: hover) {
+  .avatar:hover {
+    background-color: v-bind(css.hoverBackgroundColor);
+  }
+}
+.hover.avatar {
+  background-color: v-bind(css.hoverBackgroundColor);
 }
 .text {
   font-weight: bold;

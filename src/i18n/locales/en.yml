@@ -3,8 +3,9 @@ lang:
   code: en-US
 
 default:
+  title: MVPMatch
   meta:
-    title: MVPMatch
+    title: '@:default.title'
     description: MVPMatch assignment by Martin Kruusement
     siteName: MVPMatch
     preview: https://mvpmatch.co/images/match-mvp-social.png
@@ -12,11 +13,15 @@ default:
     # twitterImage: overrides 'preview'
 
 dashboard:
+  title: Payments Dashboard
+  caption: "Hi, how's your day going so far?"
   meta:
     title: Dashboard - MVPMatch
     description: MVPMatch assignment by Martin Kruusement
 
 reports:
+  title: Reports
+  caption: Easily generate a report of your transactions
   meta:
     default:
       title: Reports - MVPMatch
@@ -26,8 +31,6 @@ reports:
     gateway: 
       title:
         Gateway report - MVPMatch
-  title: Reports
-  caption: Easily generate a report of your transactions
   emptyReport: 
     title: No Reports
     caption: Currently you have no data for the reports to be generated. Once you start generating traffic through the Balance application the reports will be shown.
@@ -41,8 +44,10 @@ reports:
       empty: No gateways
       all: All gateways
     datePicker: 
-      startDateLabel: From date
-      endDateLabel: To date
+      placeholder:
+        start: From date
+        end: To date
+        combined: Select dates
     fetch: 
       default: Generate report
       refresh: Refresh report
@@ -68,16 +73,22 @@ reports:
       amount: Amount
 
 gateways:
+  title: Gateways
+  caption: Easily manage your gateways
   meta: 
     title: Gateways - MVPMatch
   unknown: Unknown Gateway
 
 projects:
+  title: Projects
+  caption: Super easily manage your projects
   meta: 
     title: Projects - MVPMatch
   unknown: Unknown Project
-
+  
 transactions:
+  title: Transaction details
+  caption: 'ID: {0}'
   meta: 
     title: Transaction details - MVPMatch
 
@@ -85,6 +96,39 @@ footer:
   links:
     toc: Terms & Conditions
     privacy: Privacy Policy
+
+terms:
+  title: Terms & Conditions
+  meta: 
+    title: Terms & Conditions - Placeholder
+
+privacy:
+  title: Privacy Policy
+  caption: Your data is safe with us
+  meta: 
+    title: Privacy Policy - Placeholder
+
+account:
+  caption: Enjoy the settings
+  meta: 
+    title: Account Settings - MVPMatch
+
+logout: 
+  dialog:
+    title: Log out
+    text:
+      p1: You can't log out of the demo app.
+      p2: Feel free to try though.
+    buttons:
+      confirm: Log out
+      cancel: Cancel
+  confirmationMessage: "You passed the test" 
+
+
+dialog:
+  default:
+    confirm: Confirm
+    cancel: Cancel
 
 objects:
   report:

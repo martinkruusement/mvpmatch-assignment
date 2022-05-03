@@ -1,16 +1,16 @@
 <template>
-  <div class="icon" :class="{idle, active, hover}">
+  <div class="icon" :class="[status]">
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M24.8819 13.21H12.7719L4.21191 21.77C5.9604 23.3099 8.10561 24.3287 10.404 24.7107C12.7023 25.0928 15.0618 24.8227 17.2144 23.9313C19.367 23.0398 21.2266 21.5626 22.5819 19.6675C23.9372 17.7724 24.7341 15.5352 24.8819 13.21Z" :fill="colors?.main" />
-      <path d="M3.112 20.66C1.57115 18.9126 0.551492 16.768 0.168971 14.4699C-0.213549 12.1718 0.0564146 9.81243 0.948167 7.66014C1.83992 5.50785 3.31768 3.64895 5.21343 2.2948C7.10917 0.940651 9.34684 0.145584 11.672 0V12.11L3.112 20.67V20.66Z" :fill="colors?.main" />
-      <path d="M13.2319 0V11.65H24.8819C24.695 8.62141 23.4076 5.76557 21.262 3.61996C19.1164 1.47435 16.2605 0.186932 13.2319 0V0Z" :fill="colors?.second" />
+      <path class="base-color section1" d="M24.8819 13.21H12.7719L4.21191 21.77C5.9604 23.3099 8.10561 24.3287 10.404 24.7107C12.7023 25.0928 15.0618 24.8227 17.2144 23.9313C19.367 23.0398 21.2266 21.5626 22.5819 19.6675C23.9372 17.7724 24.7341 15.5352 24.8819 13.21Z" />
+      <path class="base-color section2" d="M3.112 20.66C1.57115 18.9126 0.551492 16.768 0.168971 14.4699C-0.213549 12.1718 0.0564146 9.81243 0.948167 7.66014C1.83992 5.50785 3.31768 3.64895 5.21343 2.2948C7.10917 0.940651 9.34684 0.145584 11.672 0V12.11L3.112 20.67V20.66Z" />
+      <path class="highlight-color section3" d="M13.2319 0V11.65H24.8819C24.695 8.62141 23.4076 5.76557 21.262 3.61996C19.1164 1.47435 16.2605 0.186932 13.2319 0V0Z" />
     </svg>
   </div>
 </template>
 
 <script>
 import { wait } from '@/utils.js'
-
+// TODO: this needs to be reusable
 export default {
   name: 'ReportsIcon',
   props: {
@@ -20,42 +20,18 @@ export default {
   },
   data: function () {
     return {
-      hasFinishedAnimating: false,
-      palette: {
-        idle: {
-          main: '#B3B3B3',
-          second: '#B3B3B3',
-          third: '#CDCCCC'
-        },
-        hover: {
-          main: '#2DAEE5',
-          second: '#2DAEE5',
-          third: '#005B97'
-        },
-        active: {
-          main: '#2DAEE5',
-          second: '#005B97',
-          third: '#005B97'
-        }
-      }
+      hasFinishedAnimating: false
     }
   },
   computed: {
-    colors () {
-      let status
-      if (!this.hasFinishedAnimating) {
-        status = 'idle'
+    status () {
+      if (this.active) {
+        return 'active'
       }
-      if (!status && this.active) {
-        status = 'active'
+      if (this.hover) {
+        return 'hover'
       }
-      if (!status && this.hover) {
-        status = 'hover'
-      }
-      if (!status) {
-        status = 'idle'
-      }
-      return this.palette[status]
+      return 'idle'
     }
   },
   mounted () {
@@ -74,4 +50,19 @@ export default {
 path {
   transition: fill 0.28s ease;
 }
+
+.idle .highlight-color { fill: var(--icon-grey-dark); }
+.idle .base-color { fill: var(--icon-grey-light); }
+
+.hover .highlight-color { fill: var(--icon-color-light) }
+.hover .base-color { fill: var(--icon-color-dark) }
+.hover .section2 { fill: var(--icon-color-light) }
+
+.active .highlight-color { fill: var(--icon-color-dark); }
+.active .base-color { fill: var(--icon-color-light); }
+
+.section1 { transition-duration: 0.31s; }
+.section2 { transition-duration: 0.24s; }
+.section3 { transition-duration: 0.16s; }
+
 </style>
