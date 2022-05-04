@@ -1,8 +1,8 @@
-h2 {
+.legal-page h2 {
     margin-top: 2em;
     margin-bottom: 1.2em;
 }
-p {
+.legal-page p {
     padding-bottom: 1.2em;
     line-height: 1.4em;
 }

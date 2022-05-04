@@ -1,7 +1,7 @@
 {
   "name": "martin-kruusement-mvpmatch-assignment",
   "private": true,
-  "version": "0.9.0",
+  "version": "0.9.5",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
