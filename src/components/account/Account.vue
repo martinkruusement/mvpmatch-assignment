@@ -28,7 +28,7 @@
             </label>
 
             <label class="flag">
-              <input type="checkbox" class="restore-reset" @input="$store.commit('toggleDebug',{'reportLines':$event.target.checked})" />
+              <input type="checkbox" class="restore-reset" :checked="$store.state.system.debug.reportLines" @input="$store.commit('toggleDebug',{'reportLines':$event.target.checked})" />
               Report layout debug <router-link :to="{name:'Reports'}" class="text-link" :checked="$store.state.system.debug.reportLines">[here]</router-link> (disable general)
             </label>
 
