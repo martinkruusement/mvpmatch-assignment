@@ -48,7 +48,7 @@
 
     <PageLoading v-if="!ready" />
 
-    <EmptyReportBLock
+    <EmptyReportBlock
       v-else-if="!emptyReportFinished || (!report.loading && report?.empty === true)"
       :needed="report?.empty === true"
       :title="$t('reports.emptyReport.title')"
@@ -133,7 +133,7 @@ import PageLoading from '@/components/misc/PageLoading.vue'
 import Dropdown from '@/components/forms/Dropdown.vue'
 import BasicButton from '@/components/buttons/BasicButton.vue'
 import DateRange from '@/components/forms/DateRange.vue'
-import EmptyReportBLock from '@/components/reports/EmptyReportBLock.vue'
+import EmptyReportBlock from '@/components/reports/EmptyReportBlock.vue'
 
 export default {
   name: 'Reports',
@@ -143,7 +143,7 @@ export default {
     PageLoading,
     Dropdown,
     DateRange,
-    EmptyReportBLock,
+    EmptyReportBlock,
     BasicButton,
     ReportTotal
   },
