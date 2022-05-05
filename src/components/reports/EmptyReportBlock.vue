@@ -1,6 +1,5 @@
 <template>
   <div class="empty-report">
-    <!--     <JsonViewer :value="{...classes}" /> -->
     <div class="empty-report-content" :class="classes">
       <h2 v-if="title" class="title">{{ title }}</h2>
       <h4 v-if="caption" class="caption">{{ caption }}</h4>
@@ -40,7 +39,6 @@
 </template>
 
 <script>
-// import EmptyReportBLock from '@/components/misc/EmptyReportBLock.vue'
 
 import { wait } from '@/utils.js'
 
@@ -293,13 +291,6 @@ path, g {
 .outro .radio-1{
   transform:scale(1) translateY(100px);
   transition: all 0.55s cubic-bezier(0.55, 0, 1, 0.45) 0.1s ;
-}
-
-.ball,
-.pie-bottom,
-.pie-left,
-.pie-right {
-/*  transform:translateY(500px);*/
 }
 
 .ball {
