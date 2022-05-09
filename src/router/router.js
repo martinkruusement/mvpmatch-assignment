@@ -115,7 +115,7 @@ const routes = [
   {
     path: '/account',
     name: 'Account',
-    component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/AccountPage.vue'),
+    component: () => import(/* webpackChunkName: "main" */ '@/pages/AccountPage.vue'),
     meta: {
       i18nPath: 'account.meta'
     }
