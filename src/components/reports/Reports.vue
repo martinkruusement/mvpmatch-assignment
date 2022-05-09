@@ -459,26 +459,13 @@ export default {
   --page-head-height: v-bind("domDimensions.head.height + 'px'");
   --content-height: v-bind("domDimensions.body.height + 'px'");
   --page-head-offset: calc(var(--page-head-height) + var(--page-head-bottom-margin));
-  /*
-  --page-available-height: calc(100vh - var(--header-offset) - var(--common-gap) - var(--common-gap));
-
-  --scroll-compensation: calc(min(calc(var(--scroll-offset-y)), calc(var(--header-offset) - var(--chart-margin))) -  var(--safearea-compensation));
-  --chart-max-height: calc(100vh - var(--header-offset) - var(--page-head-offset) + var(--scroll-compensation) - var(--chart-margin));
-
-  --head-visible-height: max(calc(var(--header-offset) + var(--page-head-offset) - var(--scroll-offset-y) - var(--header-offset)), 0px);
-
-  --distance-from-top: calc(var(--header-offset) + var(--head-visible-height));
-*/
-/*  --top-distance: calc(var(--header-and-border) + var(--top-comp) + 20px);*/
   --top-offset: calc(var(--page-head-offset) + var(--header-offset));
   --top-edge: max(calc(var(--top-offset) - var(--scroll-offset-y)), 0px);
   --top-comp: calc(var(--header-and-border) - var(--top-edge) + var(--chart-margin));
   --top-limit: calc(var(--top-edge) + var(--top-comp));
   --top-distance: max(var(--top-limit), var(--top-edge));
   --all-content-height: calc(var(--header-offset) + var(--content-height));
-
   --bottom-distance: max(calc(var(--scroll-offset-y) - var(--all-content-height) + 100vh ), var(--chart-margin));
-
   --chart-max-height: calc(100vh - var(--top-distance) - var(--bottom-distance));
 }
 .report-chart {
