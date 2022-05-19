@@ -2,9 +2,8 @@
     "folders":
     [
         {
-            "folder_exclude_patterns": ["node_modules"],
-            "binary_file_patterns":
-            [
+            "folder_exclude_patterns": [],
+            "binary_file_patterns": [
                 "*.jpg",
                 "*.jpeg",
                 "*.png",
@@ -18,24 +17,66 @@
                 "*.swf",
                 "*.jar",
                 "*.zip",
-                "node_modules/**",
-                "dist/**"
+                "//node_modules/**",
+                "//dist/**"
             ],
             "path": ".",
         }
     ],
     "settings":
     {
+        "lsp_code_actions_on_save": {
+             "source.fixAll.eslint": true,
+             "source.fixAll.stylelint": true,
+         },
+         
         "LSP": {
+            
+           "language-ids": {
+               "source.projs": "javascript",
+               "source.procsss": "css",
+           },
+           "settings": {
+               "show_diagnostics_panel_on_save": 4,
+           },
+
+
             "LSP-eslint": {
                 "enabled": true,
-                "selector": "source.projs | source.js | source.ts | source.jsx | source.tsx | source.js.jsx | source.js.react | source.ts.react | text.html.vue | text.html.basic",
+                "selector": "text.html.vue | text.html.basic | source.ts | source.tsx | source.projs | source.js | source.jsx",
+                "settings": {
+                    "validate": [
+                        "javascript",
+                        "javascriptreact",
+                        "vue"
+                    ],
+                },
+                "file_watcher": {
+                    "patterns": [
+                        "**/.eslintr{c.js,c.yaml,c.yml,c,c.json,c.mjs}",
+                        "**/.eslintignore",
+                        "**/package.json"
+                    ],
+                },
             },
-        },
-        "env": {
-            "Darwin": {
-                "PATH": "$PATH:~/.nvm/versions/node/v16.14.2/bin/node",
+
+            "LSP-stylelint": {
+                "selector": "source.css | source.scss | source.less | text.html.vue",
+                "settings": {
+                    "stylelint.enable": true,
+                    "stylelint.validate": [
+                        "vue",
+                        "css",
+                        "less",
+                        "stylus",
+                        "scss"
+                    ],
+                    "stylelint.reportInvalidScopeDisables": true,
+                    "stylelint.reportNeedlessDisables": true,
+                },
             },
+
+
         },
-    },
+    }
 }

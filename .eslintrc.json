@@ -1,0 +1,58 @@
+{
+  "root": true,
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "plugins": [],
+  "extends": [
+    "@vue/standard",
+    "plugin:vue/vue3-recommended"
+  ],
+  "rules": {
+    "vue/match-component-file-name": [
+      "error",
+      {
+        "extensions": [
+          "vue",
+          "js"
+        ],
+        "shouldMatchCase": true
+      }
+    ],
+    "vue/multi-word-component-names": "off",
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": {
+          "max": 7
+        },
+        "multiline": {
+          "max": 1
+        }
+      }
+    ],
+    "vue/html-self-closing": [
+      "error",
+      {
+        "html": {
+          "void": "always",
+          "normal": "any",
+          "component": "always"
+        },
+        "svg": "always",
+        "math": "always"
+      }
+    ],
+    "vue/require-default-prop": "off",
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/max-len": [
+      "warn",
+      {
+        "code": 180,
+        "template": 180,
+        "ignoreComments": true
+      }
+    ]
+  }
+}

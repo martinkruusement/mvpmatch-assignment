@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "module": "esnext",
     "target": "esnext",
     "paths": {
@@ -7,5 +8,6 @@
     },
     "moduleResolution": "node"
   },
-  "exclude": ["node_modules"]
+  "typeRoots": [ "./types", "./node_modules/@types"],
+  "exclude": ["node_modules", "types"]
 }
