@@ -26,7 +26,7 @@
     "build_systems": [{
          "name": "Auto-Build Router",
          "shell_cmd": "./build-router.sh $file $project_path $project",
-         "silent": true
+         "silent": true,
     }],
     "settings":
     {
@@ -48,9 +48,11 @@
                "source.procsss": "css",
                "source.json": "json",
            },
+           
            "settings": {
                "show_diagnostics_panel_on_save": 4,
-           },
+                "enabled": true,
+            },
 
 
             "LSP-eslint": {
@@ -87,10 +89,10 @@
                     ],
                     "stylelint.reportInvalidScopeDisables": true,
                     "stylelint.reportNeedlessDisables": true,
-                }
-            }
+                },
+            },
 
 
-        }
-    }
+        },
+    },
 }

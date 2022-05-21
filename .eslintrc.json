@@ -5,12 +5,26 @@
     "node": true
   },
   "parser": "@babel/eslint-parser",
+  "parserOptions":{
+    "requireConfigFile": false
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@", "./src"]
+        ],
+        "extensions": [".js", ".vue"]
+      }
+    }
+  },
   "plugins": [],
   "extends": [
     "@vue/standard",
     "plugin:vue/vue3-recommended"
   ],
   "rules": {
+    "import/no-unresolved": "error",
     "vue/match-component-file-name": [
       "error",
       {
@@ -61,6 +75,11 @@
       "extends": ["plugin:yml/standard"],
       "files": ["*.yaml", "*.yml"],
       "parser": "yaml-eslint-parser"
+    },
+    {
+      "extends": ["standard", "plugin:jsonc/recommended-with-jsonc"],
+      "files": ["*.json", "*.json5", "*.jsonc"],
+      "parser": "jsonc-eslint-parser"
     }
   ]
 }
