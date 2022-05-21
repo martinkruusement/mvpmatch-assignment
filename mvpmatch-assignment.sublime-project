@@ -23,8 +23,19 @@
             "path": ".",
         }
     ],
+    "build_systems": [{
+         "name": "Auto-Build Router",
+         "shell_cmd": "./build-router.sh $file $project_path $project",
+         "silent": true
+    }],
     "settings":
     {
+        "on_post_save_project": {
+            "command": "build", "args": {
+                "build_system": "Auto-Build Router",
+            },
+        },
+
         "lsp_code_actions_on_save": {
              "source.fixAll.eslint": true,
              "source.fixAll.stylelint": true,
