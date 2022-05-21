@@ -4,6 +4,7 @@
     "es2022": true,
     "node": true
   },
+  "parser": "@babel/eslint-parser",
   "plugins": [],
   "extends": [
     "@vue/standard",
@@ -54,5 +55,12 @@
         "ignoreComments": true
       }
     ]
-  }
+  },
+   "overrides": [
+    {
+      "extends": ["plugin:yml/standard"],
+      "files": ["*.yaml", "*.yml"],
+      "parser": "yaml-eslint-parser"
+    }
+  ]
 }

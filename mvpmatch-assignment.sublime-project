@@ -35,6 +35,7 @@
            "language-ids": {
                "source.projs": "javascript",
                "source.procsss": "css",
+               "source.json": "json",
            },
            "settings": {
                "show_diagnostics_panel_on_save": 4,
@@ -43,12 +44,14 @@
 
             "LSP-eslint": {
                 "enabled": true,
-                "selector": "text.html.vue | text.html.basic | source.ts | source.tsx | source.projs | source.js | source.jsx",
+                "selector": "source.yaml | source.json | text.html.vue | text.html.basic | source.ts | source.tsx | source.projs | source.js | source.jsx",
                 "settings": {
                     "validate": [
                         "javascript",
                         "javascriptreact",
-                        "vue"
+                        "vue",
+                        "json",
+                        "yaml"
                     ],
                 },
                 "file_watcher": {
@@ -73,10 +76,10 @@
                     ],
                     "stylelint.reportInvalidScopeDisables": true,
                     "stylelint.reportNeedlessDisables": true,
-                },
-            },
+                }
+            }
 
 
-        },
+        }
     }
 }
