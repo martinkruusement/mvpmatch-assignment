@@ -23,18 +23,29 @@
             "path": ".",
         }
     ],
+
     "build_systems": [{
          "name": "Auto-Build Router",
-         "shell_cmd": "./build-router.sh $file $project_path $project",
-         "silent": true,
-    }],
+         "cmd": ["./.build-router.sh $file_name"],
+         "shell": true,
+         "quiet": true
+    }]
+    ,
+    "build_router": {
+        "package.json": "npm run lint:package"
+    },
+
     "settings":
     {
-        "on_post_save_project": {
-            "command": "build", "args": {
+
+        "on_post_save_project": [{
+            "command": "build",
+            "args": {
                 "build_system": "Auto-Build Router",
+                "variant": ""
             },
-        },
+            "scope": "window"
+        }],
 
         "lsp_code_actions_on_save": {
              "source.fixAll.eslint": true,
@@ -51,7 +62,6 @@
            
            "settings": {
                "show_diagnostics_panel_on_save": 4,
-                "enabled": true,
             },
 
 

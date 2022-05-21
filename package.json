@@ -1,12 +1,13 @@
 {
-  "name": "martin-kruusement-mvpmatch-assignment",
   "private": true,
+  "name": "martin-kruusement-mvpmatch-assignment",
   "version": "0.9.5",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
+    "dev": "vite",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint:package": "prettier-package-json --config=.prettier-package-json --write",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^3.2.0",
@@ -47,6 +48,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^8.7.1",
     "eslint-plugin-yml": "^1.0.0",
+    "prettier-package-json": "^2.6.3",
     "stylelint": "^14.8.2",
     "stylelint-config-recommended": "^7.0.0",
     "stylelint-config-recommended-vue": "^1.4.0",

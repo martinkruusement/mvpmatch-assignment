@@ -1,0 +1,4 @@
+tabWidth: 2
+useTabs: false
+expandUsers: true
+# keyOrder <array|function>
