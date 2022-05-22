@@ -20,19 +20,19 @@
                 "//node_modules/**",
                 "//dist/**"
             ],
-            "path": ".",
+            "path": "."
         }
     ],
 
     "build_systems": [{
          "name": "Auto-Build Router",
-         "cmd": ["./.build-router.sh $file_name"],
+         "cmd": ["./.build-router.sh $file_name $project"],
          "shell": true,
          "quiet": true
-    }]
-    ,
+    }],
     "build_router": {
-        "package.json": "npm run lint:package"
+        "package.json": "npm run lint:package",
+        "*.sublime-project": "echo this is a project"
     },
 
     "settings":
@@ -49,7 +49,7 @@
 
         "lsp_code_actions_on_save": {
              "source.fixAll.eslint": true,
-             "source.fixAll.stylelint": true,
+             "source.fixAll.stylelint": true
          },
          
         "LSP": {
@@ -57,11 +57,11 @@
            "language-ids": {
                "source.projs": "javascript",
                "source.procsss": "css",
-               "source.json": "json",
+               "source.json": "json"
            },
            
            "settings": {
-               "show_diagnostics_panel_on_save": 4,
+               "show_diagnostics_panel_on_save": 4
             },
 
 
@@ -75,15 +75,15 @@
                         "vue",
                         "json",
                         "yaml"
-                    ],
+                    ]
                 },
                 "file_watcher": {
                     "patterns": [
                         "**/.eslintr{c.js,c.yaml,c.yml,c,c.json,c.mjs}",
                         "**/.eslintignore",
                         "**/package.json"
-                    ],
-                },
+                    ]
+                }
             },
 
             "LSP-stylelint": {
@@ -98,11 +98,11 @@
                         "scss"
                     ],
                     "stylelint.reportInvalidScopeDisables": true,
-                    "stylelint.reportNeedlessDisables": true,
-                },
-            },
+                    "stylelint.reportNeedlessDisables": true
+                }
+            }
 
 
-        },
-    },
+        }
+    }
 }
