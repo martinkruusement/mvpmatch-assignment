@@ -14,8 +14,6 @@ project_file=$2
 jq ".build_router | to_entries[] | .key, .value" $project_file |
 while IFS= read -r key && IFS= read -r value; do
   if echo $file | grep -e "$key" > /dev/null; then
-    echo $file matches $key
-    echo "yes match"
     echo "$file: [$key] routed to command [$value]"
     cmd="${value%\"}"
     cmd="${cmd#\"}"
