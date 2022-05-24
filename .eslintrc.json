@@ -2,10 +2,12 @@
   "root": true,
   "env": {
     "es2022": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
-  "parser": "@babel/eslint-parser",
+  "parser": "vue-eslint-parser",
   "parserOptions":{
+    "parser": "@babel/eslint-parser",
     "requireConfigFile": false
   },
   "settings": {
@@ -20,8 +22,9 @@
   },
   "plugins": [],
   "extends": [
-    "@vue/standard",
-    "plugin:vue/vue3-recommended"
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "@vue/standard"
   ],
   "rules": {
     "import/no-unresolved": "error",
